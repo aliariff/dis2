@@ -7,7 +7,7 @@ public class HelloWorldConsole {
     HashMap<String,String[]> supportedLanguages = new HashMap<String,String[]>();
     supportedLanguages.put("d", new String[] { "deutsch", "Guten Tag!" });
     supportedLanguages.put("e", new String[] { "english", "Good Day!" });
-    supportedLanguages.put("f", new String[] { "francais", "Bonne journée" });
+    supportedLanguages.put("f", new String[] { "francais", "Bonne journée!" });
 
     Scanner scan = new Scanner(System.in);
     String input, format, key;
