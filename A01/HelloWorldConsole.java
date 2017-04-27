@@ -16,9 +16,10 @@ public class HelloWorldConsole {
     while (true) {
       System.out.println("Select one of the following:");
       for (HashMap.Entry<String, String[]> entry : supportedLanguages.entrySet()) {
+        // assume that the key is always n character start from the beginning of the string
         key = entry.getKey();
         value = entry.getValue();
-        format = String.format("\t[%s]%s", key.toUpperCase(), value[0].substring(1));
+        format = String.format("\t[%s]%s", key.toUpperCase(), value[0].substring(key.length()));
         System.out.println(format);
       }
       System.out.println("[Q]uit");
