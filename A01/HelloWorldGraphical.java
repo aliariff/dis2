@@ -52,7 +52,7 @@ public class HelloWorldGraphical implements ActionListener {
       button.setMaximumSize(new Dimension(100, button.getMinimumSize().height));
       button.addActionListener(this);
       box.add(button);
-      box.add(Box.createVerticalStrut(30));
+      box.add(Box.createVerticalStrut(20));
     }
     box.add(Box.createRigidArea(new Dimension(0, 100)));
     mainFrame.add(box, BorderLayout.NORTH);
