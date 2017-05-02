@@ -6,14 +6,14 @@ import javax.swing.*;
 
 public class HelloWorldGraphical implements ActionListener {
 
-/*
- For HelloWorldGraphical, the elements that are needed for User Interface are:
-	-JFrame for the main frame
-	-JLabel for the welcome message
-	-JButton for language and exit buttons
-	-Box
-	-LinkedHashMap<String,String> to restore the language and the welcome message
-*/
+  /*
+    For HelloWorldGraphical, the elements that are needed for User Interface are:
+    -JFrame for the main frame
+    -JLabel for the welcome message
+    -JButton for language and exit buttons
+    -Box
+    -LinkedHashMap<String,String> to store the language and the welcome message
+  */
   private JFrame mainFrame;
   private JLabel welcomeMessage;
   private JButton button;
@@ -27,9 +27,9 @@ public class HelloWorldGraphical implements ActionListener {
     supportedLanguages.put("francais", "Bonne journée!");
   }
 
-  /* 
-     prepareWindow() function is to set up the default main frame for the application.
-     The default size is 400px width and 400px length, with border of 30pixels
+  /*
+    prepareWindow() function is to set up the default main frame for the application.
+    The default size is 400px width and 400px length, with border of 30pixels
   */
 
   private void prepareWindow() {
@@ -77,9 +77,9 @@ public class HelloWorldGraphical implements ActionListener {
     mainFrame.setVisible(true);
   }
 
-/*
-  actionPerformed(ActionEvent) is the event listener that will change the welcome message (or quit) when the button is pressed
-*/
+  /*
+    actionPerformed(ActionEvent) is the event listener that will change the welcome message (or quit) when the button is pressed
+  */
 
   @Override
   public void actionPerformed(ActionEvent e) {
