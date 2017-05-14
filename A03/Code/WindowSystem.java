@@ -25,4 +25,5 @@ public class WindowSystem extends GraphicsEventSystem {
   public void addComponent(SimpleWindow obj) {
     this.simpleWindows.add(obj);
   }
+
 }
