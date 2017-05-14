@@ -18,22 +18,22 @@ public class WindowManager extends WindowSystem {
       // title bar
       super.setColor(Color.BLUE);
       super.fillRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
-          item.getStartY() + constant);
+                     item.getStartY() + constant);
 
       // close btn
       super.setColor(Color.RED);
       super.fillRect(item.getStartX() + item.getWidth() - constant, item.getStartY(),
-          item.getStartX() + item.getWidth(), item.getStartY() + constant);
+                     item.getStartX() + item.getWidth(), item.getStartY() + constant);
 
       // title name
       super.setColor(Color.YELLOW);
       super.drawString(item.getName(), item.getStartX() + (item.getWidth() / 2) - 30,
-          item.getStartY() + constant);
+                       item.getStartY() + constant);
 
       // x inside cls btn
       super.setColor(Color.WHITE);
       super.drawString("x", item.getStartX() + item.getWidth() - constant + center,
-          item.getStartY() + constant - center);
+                       item.getStartY() + constant - center);
     }
   }
 

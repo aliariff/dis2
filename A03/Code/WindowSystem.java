@@ -18,7 +18,7 @@ public class WindowSystem extends GraphicsEventSystem {
     for (SimpleWindow item : simpleWindows) {
       super.setColor(item.getBackgroundColor());
       super.fillRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
-          item.getStartY() + item.getHeight());
+                     item.getStartY() + item.getHeight());
     }
   }
 
