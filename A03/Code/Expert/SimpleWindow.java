@@ -1,10 +1,13 @@
 import java.awt.Color;
 
+//@author Ali, Dala, Zain
+
 public class SimpleWindow {
   private int startX, startY, width, height;
   private String name;
   private Color backgroundColor;
 
+  //constructor
   public SimpleWindow(String name, int startX, int startY, int width, int height) {
     this.name = name;
     this.startX = startX;

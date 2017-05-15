@@ -100,7 +100,6 @@ public class WindowManager extends WindowSystem {
     }
   }
 
-  //if the tittle bar is clicked
   private Boolean clicedInTitleBar(int x, int y) {
     SimpleWindow item;
     for (int i = 0; i < this.simpleWindows.size(); i++) {
