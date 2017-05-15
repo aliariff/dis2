@@ -33,11 +33,6 @@ public class WindowManager extends WindowSystem {
       super.setColor(Color.WHITE);
       super.drawString("X", item.getStartX() + item.getWidth() - constant + (constant / 2),
                        item.getStartY() + constant - (constant / 2));
-
-      // border
-      super.setColor(Color.GREEN);
-      super.drawRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
-                     item.getStartY() + item.getHeight());
     }
   }
 
@@ -102,9 +97,6 @@ public class WindowManager extends WindowSystem {
       if (item.getStartX() < x && item.getStartX() + item.getWidth() - constant > x
           && item.getStartY() < y && item.getStartY() + constant > y) {
         this.currentWindow = item;
-        this.simpleWindows.remove(i);
-        this.simpleWindows.add(item);
-        this.requestRepaint();
         return true;
       }
     }
