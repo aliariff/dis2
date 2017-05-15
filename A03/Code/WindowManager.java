@@ -1,5 +1,10 @@
 import java.awt.Color;
 
+//@author Ali, Dala, Zain
+//WindowManager class function is to manage the widget that will be added to simple windows.
+//For A03, tittle bar, tittle name and a close button will be added to each simple windows.
+//Mouse events will also be added.
+
 public class WindowManager extends WindowSystem {
   private int constant = 30;
   private int magicNumber = 23;
@@ -14,33 +19,35 @@ public class WindowManager extends WindowSystem {
   protected void handlePaint() {
     super.handlePaint();
     for (SimpleWindow item : this.simpleWindows) {
-      // title bar
+      // to add title bar to simple window
       super.setColor(Color.BLUE);
       super.fillRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
                      item.getStartY() + constant);
 
-      // close btn
+      // to add close button to simple window
       super.setColor(Color.RED);
       super.fillRect(item.getStartX() + item.getWidth() - constant, item.getStartY(),
                      item.getStartX() + item.getWidth(), item.getStartY() + constant);
 
-      // title name
+      // to add window name
       super.setColor(Color.YELLOW);
       super.drawString(item.getName(), item.getStartX() + (item.getWidth() / 2) - constant,
                        item.getStartY() + (constant / 2));
 
-      // x inside cls btn
+      // to add the "X" inside close btn
       super.setColor(Color.WHITE);
       super.drawString("X", item.getStartX() + item.getWidth() - constant + (constant / 2),
                        item.getStartY() + constant - (constant / 2));
     }
   }
 
+  //if mouse is clicked  
   public void handleMouseClicked(int x, int y) {
     y -= magicNumber;
     clickedInCloseButton(x, y);
   }
 
+  //if mouse is pressed (dragging the mouse)
   public void handleMousePressed(int x, int y) {
     y -= magicNumber;
     if (clicedInTitleBar(x, y)) {
@@ -49,6 +56,7 @@ public class WindowManager extends WindowSystem {
     }
   }
 
+  //if mouse click is released
   public void handleMouseReleased(int x, int y) {
     y -= magicNumber;
     if (this.initialX > -1 && this.initialY > -1 && this.currentWindow != null) {
@@ -77,6 +85,8 @@ public class WindowManager extends WindowSystem {
     y -= magicNumber;
   }
 
+  //if the "X" (close) button is clicked, the clicked simple window will be remove from the array list
+  //and the desktop will be repainted
   private void clickedInCloseButton(int x, int y) {
     SimpleWindow item;
     for (int i = 0; i < this.simpleWindows.size(); i++) {
@@ -90,6 +100,7 @@ public class WindowManager extends WindowSystem {
     }
   }
 
+  //if the tittle bar is clicked
   private Boolean clicedInTitleBar(int x, int y) {
     SimpleWindow item;
     for (int i = 0; i < this.simpleWindows.size(); i++) {
