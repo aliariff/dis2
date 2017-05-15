@@ -41,7 +41,7 @@ public class WindowManager extends WindowSystem {
     }
   }
 
-  //if mouse is clicked  
+  //if mouse is clicked
   public void handleMouseClicked(int x, int y) {
     y -= magicNumber;
     clickedInCloseButton(x, y);
@@ -50,7 +50,7 @@ public class WindowManager extends WindowSystem {
   //if mouse is pressed (dragging the mouse)
   public void handleMousePressed(int x, int y) {
     y -= magicNumber;
-    if (clicedInTitleBar(x, y)) {
+    if (clickedInTitleBar(x, y)) {
       this.initialX = x;
       this.initialY = y;
     }
@@ -100,7 +100,7 @@ public class WindowManager extends WindowSystem {
     }
   }
 
-  private Boolean clicedInTitleBar(int x, int y) {
+  private Boolean clickedInTitleBar(int x, int y) {
     SimpleWindow item;
     for (int i = 0; i < this.simpleWindows.size(); i++) {
       item = this.simpleWindows.get(i);

@@ -6,7 +6,7 @@ import java.awt.Color;
 //and we add a simple border around the simple windows.
 
 public class WindowManager extends WindowSystem {
-	//constant and magicNumber is variable to help positioning the window
+  //constant and magicNumber is variable to help positioning the window
   private int constant = 30;
   private int magicNumber = 23;
   private int initialX, initialY, finalX, finalY;
@@ -23,16 +23,16 @@ public class WindowManager extends WindowSystem {
       // to add title bar to simple window
       super.setColor(Color.BLUE);
       super.fillRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
-                       item.getStartY() + constant);
+                     item.getStartY() + constant);
       // to add close button to simple window
       super.setColor(Color.RED);
       super.fillRect(item.getStartX() + item.getWidth() - constant, item.getStartY(),
-                       item.getStartX() + item.getWidth(), item.getStartY() + constant);
+                     item.getStartX() + item.getWidth(), item.getStartY() + constant);
 
       // to add window name
       super.setColor(Color.YELLOW);
       super.drawString(item.getName(), item.getStartX() + (item.getWidth() / 2) - constant,
-                         item.getStartY() + (constant / 2));
+                       item.getStartY() + (constant / 2));
 
       // to add the "X" inside close btn
       super.setColor(Color.WHITE);
@@ -46,7 +46,7 @@ public class WindowManager extends WindowSystem {
     }
   }
 
-//if mouse is clicked  
+//if mouse is clicked
   public void handleMouseClicked(int x, int y) {
     y -= magicNumber;
     clickedInCloseButton(x, y);

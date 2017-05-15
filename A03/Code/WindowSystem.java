@@ -17,7 +17,7 @@ public class WindowSystem extends GraphicsEventSystem {
 
   @Override
   protected void handlePaint() {
-	//for every Simple Window, it will get the background colour and draw the rectangle from the given coordinate
+    // for every Simple Window, it will get the background colour and draw the rectangle from the given coordinate
     for (SimpleWindow item : simpleWindows) {
       super.setColor(item.getBackgroundColor());
       super.fillRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
