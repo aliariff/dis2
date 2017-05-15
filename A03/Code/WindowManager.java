@@ -1,8 +1,7 @@
 import java.awt.Color;
 
 public class WindowManager extends WindowSystem {
-  private int constant = 20;
-  private int center = 2;
+  private int constant = 30;
   private int magicNumber = 23;
   private int initialX, initialY, finalX, finalY;
   private SimpleWindow currentWindow;
@@ -27,13 +26,13 @@ public class WindowManager extends WindowSystem {
 
       // title name
       super.setColor(Color.YELLOW);
-      super.drawString(item.getName(), item.getStartX() + (item.getWidth() / 2) - 30,
-                       item.getStartY() + constant);
+      super.drawString(item.getName(), item.getStartX() + (item.getWidth() / 2) - constant,
+                       item.getStartY() + (constant / 2));
 
       // x inside cls btn
       super.setColor(Color.WHITE);
-      super.drawString("x", item.getStartX() + item.getWidth() - constant + center,
-                       item.getStartY() + constant - center);
+      super.drawString("X", item.getStartX() + item.getWidth() - constant + (constant / 2),
+                       item.getStartY() + constant - (constant / 2));
     }
   }
 
@@ -98,6 +97,9 @@ public class WindowManager extends WindowSystem {
       if (item.getStartX() < x && item.getStartX() + item.getWidth() - constant > x
           && item.getStartY() < y && item.getStartY() + constant > y) {
         this.currentWindow = item;
+        this.simpleWindows.remove(i);
+        this.simpleWindows.add(item);
+        this.requestRepaint();
         return true;
       }
     }
