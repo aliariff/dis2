@@ -1,4 +1,4 @@
-﻿//DIS II Assignment 4
+//DIS II Assignment 4
 //Group 7 :
 //	- Andi Heynoum Dala Rifat
 //	- Ali Ariff

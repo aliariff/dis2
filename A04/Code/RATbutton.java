@@ -3,7 +3,7 @@
 //	- Andi Heynoum Dala Rifat
 //	- Ali Ariff
 //	- Zain A. Solail
-// RATLabel class
+// RATbutton class
 
 import java.awt.Color;
 
