@@ -22,7 +22,7 @@ public class WindowSystem extends GraphicsEventSystem {
     for (SimpleWindow item : simpleWindows) {
       this.setColor(item.getBackgroundColor());
       this.fillRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
-          item.getStartY() + item.getHeight());
+                    item.getStartY() + item.getHeight());
 
       if (wm != null) {
         wm.decorate(item);
@@ -39,7 +39,7 @@ public class WindowSystem extends GraphicsEventSystem {
   }
 
   public SimpleWindow createSimpleWindow(String name, int startX, int startY, int width,
-      int height) {
+                                         int height) {
     SimpleWindow sw = new SimpleWindow(name, startX, startY, width, height);
     this.simpleWindows.add(sw);
     return sw;
@@ -53,7 +53,7 @@ public class WindowSystem extends GraphicsEventSystem {
   private void draw(RATbutton button) {
     this.setColor(button.getBackgroundColor());
     this.fillRect(button.getX(), button.getY(), button.getX() + button.getWidth(),
-        button.getY() + button.getHeight());
+                  button.getY() + button.getHeight());
 
     this.setColor(button.getColor());
     this.drawString(button.getName(), button.getX() + 15, button.getY() + 17);

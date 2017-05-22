@@ -14,33 +14,33 @@ public class WindowManager {
     // title bar
     ws.setColor(Color.BLUE);
     ws.fillRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
-        item.getStartY() + constant);
+                item.getStartY() + constant);
 
     // close btn
     ws.setColor(Color.RED);
     ws.fillRect(item.getStartX() + item.getWidth() - constant, item.getStartY(),
-        item.getStartX() + item.getWidth(), item.getStartY() + constant);
+                item.getStartX() + item.getWidth(), item.getStartY() + constant);
 
     // title name
     ws.setColor(Color.YELLOW);
     ws.drawString(item.getName(), item.getStartX() + (item.getWidth() / 2) - constant,
-        item.getStartY() + (constant / 2));
+                  item.getStartY() + (constant / 2));
 
     // x inside cls btn
     ws.setColor(Color.WHITE);
     ws.drawString("X", item.getStartX() + item.getWidth() - constant + (constant / 2),
-        item.getStartY() + constant - (constant / 2));
+                  item.getStartY() + constant - (constant / 2));
 
     // border
     ws.setColor(Color.GREEN);
     ws.drawRect(item.getStartX(), item.getStartY(), item.getStartX() + item.getWidth(),
-        item.getStartY() + item.getHeight());
+                item.getStartY() + item.getHeight());
   }
 
   public void decorate(RATbutton button) {
     ws.setColor(Color.GREEN);
     ws.drawRect(button.getX(), button.getY(), button.getX() + button.getWidth(),
-        button.getY() + button.getHeight());
+                button.getY() + button.getHeight());
   }
 
   public void decorate(RATlabel label) {
