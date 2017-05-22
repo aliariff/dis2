@@ -73,4 +73,9 @@ public class SimpleWindow {
     return ratWidget;
   }
 
+  public void moveTo(int x, int y) {
+    this.startX = x;
+    this.startY = y;
+  }
+
 }

@@ -3,14 +3,13 @@ import java.util.LinkedList;
 import de.rwth.hci.Graphics.GraphicsEventSystem;
 
 public class WindowSystem extends GraphicsEventSystem {
-  private int width, height;
-  private LinkedList<SimpleWindow> simpleWindows;
+  public LinkedList<SimpleWindow> simpleWindows;
   private WindowManager wm;
+  public int initialX, initialY, finalX, finalY;
+  public SimpleWindow currentWindow;
 
   public WindowSystem(int i, int j) {
     super(i, j);
-    this.width = i;
-    this.height = j;
     simpleWindows = new LinkedList<SimpleWindow>();
     if (wm == null) {
       wm = new WindowManager(this);
@@ -46,8 +45,28 @@ public class WindowSystem extends GraphicsEventSystem {
   }
 
   public void handleMouseClicked(int x, int y) {
+    wm.handleMouseClicked(x, y);
+    this.requestRepaint();
+  }
 
+  public void handleMousePressed(int x, int y) {
+    wm.handleMousePressed(x, y);
+    this.requestRepaint();
+  }
 
+  public void handleMouseReleased(int x, int y) {
+    wm.handleMouseReleased(x, y);
+    this.requestRepaint();
+  }
+
+  public void handleMouseMoved(int x, int y) {
+    wm.handleMouseMoved(x, y);
+    this.requestRepaint();
+  }
+
+  public void handleMouseDragged(int x, int y) {
+    wm.handleMouseDragged(x, y);
+    this.requestRepaint();
   }
 
   private void draw(RATbutton button) {
