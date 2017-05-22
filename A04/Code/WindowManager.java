@@ -3,7 +3,6 @@ import java.awt.Color;
 public class WindowManager {
   private WindowSystem ws;
   private int constant = 30;
-  private int magicNumber = 23;
 
   public WindowManager(WindowSystem aWs) {
     this.ws = aWs;
@@ -47,13 +46,11 @@ public class WindowManager {
   }
 
   public void handleMouseClicked(int x, int y) {
-    y -= magicNumber;
     clickedInCloseButton(x, y);
     clickedInWidget(x, y);
   }
 
   public void handleMousePressed(int x, int y) {
-    y -= magicNumber;
     if (clicedInTitleBar(x, y)) {
       ws.initialX = x;
       ws.initialY = y;
@@ -61,7 +58,6 @@ public class WindowManager {
   }
 
   public void handleMouseReleased(int x, int y) {
-    y -= magicNumber;
     ws.currentWindow = null;
     ws.initialX = -1;
     ws.initialY = -1;
@@ -70,11 +66,9 @@ public class WindowManager {
   }
 
   public void handleMouseMoved(int x, int y) {
-    y -= magicNumber;
   }
 
   public void handleMouseDragged(int x, int y) {
-    y -= magicNumber;
     if (ws.initialX > -1 && ws.initialY > -1 && ws.currentWindow != null) {
       ws.finalX = x;
       ws.finalY = y;
