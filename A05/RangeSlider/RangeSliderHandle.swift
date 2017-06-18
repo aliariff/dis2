@@ -10,11 +10,13 @@ import Cocoa
 
 class RangeSliderHandle: NSView {
     private var clicked : Bool = false
+    private var currentPos : NSPoint?
     private var slider : RangeSlider?
     private var track : RangeSliderHorizontalTrack?
-    private var currentValue : Int = 0
+    private var currentValue : Int! = 0
     private var pixelSize : Double = 0.0
     private var symbol : String = ""
+    public var sliderInfo : RangeSliderInfo?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -29,6 +31,7 @@ class RangeSliderHandle: NSView {
         slider = rangeSlider
         track = trackSlider
         symbol = sym
+        currentPos = frame.origin
         if (leftHandle()) {
             currentValue = (slider?.leftIndicator)!
         } else {
@@ -41,6 +44,7 @@ class RangeSliderHandle: NSView {
         let x = CGFloat (currentValue) * CGFloat (pixelSize)
         let y = (slider?.frame.height)! / 2
         let thisOrigin = NSMakePoint(x + 20, y - 10)
+        currentPos = thisOrigin
         setFrameOrigin(thisOrigin)
         setFrameSize(NSMakeSize(10, 20))
     }
@@ -51,6 +55,14 @@ class RangeSliderHandle: NSView {
     
     func rightHandle() -> Bool {
         return symbol == "]"
+    }
+    
+    func getCurrentValue() -> Int! {
+        return currentValue
+    }
+    
+    func getCurrentPos() -> NSPoint! {
+        return currentPos
     }
     
     override func draw(_ dirtyRect: NSRect) {
@@ -68,7 +80,7 @@ class RangeSliderHandle: NSView {
             NSForegroundColorAttributeName: textColor,
         ] as [String : Any]
         handle.draw(at: NSMakePoint(0, 0), withAttributes: textFontAttributes)
-        
+        Swift.print("draw handle")
         NSDottedFrameRect(dirtyRect)
     }
     
@@ -86,6 +98,7 @@ class RangeSliderHandle: NSView {
         let newDragLocation = superview!.convert(theEvent.locationInWindow, from:nil)
         if (clicked && currentValue >= (slider?.minimumValue)! && currentValue <= (slider?.maximumValue)!) {
             needsDisplay = true
+            sliderInfo?.needsDisplay = true
             currentValue = Int (Double (newDragLocation.x - 20) / pixelSize)
             currentValue = max((slider?.minimumValue)!, currentValue)
             currentValue = min((slider?.maximumValue)!, currentValue)
