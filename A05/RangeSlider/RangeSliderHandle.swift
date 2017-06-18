@@ -9,15 +9,14 @@
 import Cocoa
 
 class RangeSliderHandle: NSView {
+    private var track : RangeSliderHorizontalTrack?
+    private var slider : RangeSlider?
     private var clicked : Bool = false
     private var currentPos : NSPoint?
-    private var slider : RangeSlider?
-    private var track : RangeSliderHorizontalTrack?
     private var currentValue : Int! = 0
     private var pixelSize : Double = 0.0
     private var symbol : String = ""
-    public var sliderInfo : RangeSliderInfo?
-
+    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
@@ -26,16 +25,16 @@ class RangeSliderHandle: NSView {
         super.init(frame: frameRect)
     }
     
-    init(frame frameRect: NSRect, slider rangeSlider: RangeSlider, track trackSlider: RangeSliderHorizontalTrack, symbol sym: String) {
+    init(frame frameRect: NSRect, track trackSlider: RangeSliderHorizontalTrack, symbol sym: String) {
         super.init(frame: frameRect)
-        slider = rangeSlider
         track = trackSlider
+        slider = track?.slider
         symbol = sym
         currentPos = frame.origin
         if (leftHandle()) {
-            currentValue = (slider?.leftIndicator)!
+            currentValue = slider?.leftIndicator
         } else {
-            currentValue = (slider?.rightIndicator)!
+            currentValue = slider?.rightIndicator
         }
     }
     
@@ -46,7 +45,6 @@ class RangeSliderHandle: NSView {
         let thisOrigin = NSMakePoint(x + 20, y - 10)
         currentPos = thisOrigin
         setFrameOrigin(thisOrigin)
-        setFrameSize(NSMakeSize(10, 20))
     }
     
     func leftHandle() -> Bool {
@@ -57,12 +55,8 @@ class RangeSliderHandle: NSView {
         return symbol == "]"
     }
     
-    func getCurrentValue() -> Int! {
-        return currentValue
-    }
-    
-    func getCurrentPos() -> NSPoint! {
-        return currentPos
+    func getCurrentPos() -> NSPoint {
+        return currentPos!
     }
     
     override func draw(_ dirtyRect: NSRect) {
@@ -80,12 +74,13 @@ class RangeSliderHandle: NSView {
             NSForegroundColorAttributeName: textColor,
         ] as [String : Any]
         handle.draw(at: NSMakePoint(0, 0), withAttributes: textFontAttributes)
-        Swift.print("draw handle")
+        track?.sliderInfo?.needsDisplay = true
         NSDottedFrameRect(dirtyRect)
     }
     
     override func mouseDown(with theEvent: NSEvent) {
         clicked = true
+        needsDisplay = true
     }
     
     override func mouseUp(with theEvent: NSEvent) {
@@ -96,13 +91,22 @@ class RangeSliderHandle: NSView {
     override func mouseDragged(with theEvent: NSEvent) {
 //         mouse coordinates within this view's coordinate system
         let newDragLocation = superview!.convert(theEvent.locationInWindow, from:nil)
-        if (clicked && currentValue >= (slider?.minimumValue)! && currentValue <= (slider?.maximumValue)!) {
+        if (clicked && currentValue >= (slider?.minimumValue)! &&
+            currentValue <= (slider?.maximumValue)! &&
+            (track?.currentMinValue)! <= (track?.currentMaxValue)!) {
+            
             needsDisplay = true
-            sliderInfo?.needsDisplay = true
-            currentValue = Int (Double (newDragLocation.x - 20) / pixelSize)
-            currentValue = max((slider?.minimumValue)!, currentValue)
-            currentValue = min((slider?.maximumValue)!, currentValue)
-            Swift.print(currentValue)
+            var newValue = Int (Double (newDragLocation.x - 20) / pixelSize)
+            newValue = max((slider?.minimumValue)!, newValue)
+            newValue = min((slider?.maximumValue)!, newValue)
+            
+            if (leftHandle() && newValue < (track?.currentMaxValue)!) {
+                track?.currentMinValue = newValue
+                currentValue = newValue
+            } else if (rightHandle() && newValue > (track?.currentMinValue)!) {
+                track?.currentMaxValue = newValue
+                currentValue = newValue
+            }
         }
     }
 }

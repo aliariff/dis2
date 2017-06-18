@@ -9,7 +9,12 @@
 import Cocoa
 
 class RangeSliderHorizontalTrack: NSView {
-    private var slider : RangeSlider?
+    public var slider : RangeSlider?
+    public var leftHandle : RangeSliderHandle?
+    public var rightHandle : RangeSliderHandle?
+    public var sliderInfo : RangeSliderInfo?
+    public var currentMinValue : Int = 0
+    public var currentMaxValue : Int = 0
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -22,6 +27,16 @@ class RangeSliderHorizontalTrack: NSView {
     init(frame frameRect: NSRect, slider rangeSlider: RangeSlider) {
         super.init(frame: frameRect)
         slider = rangeSlider
+        currentMinValue = (slider?.leftIndicator)!
+        currentMaxValue = (slider?.rightIndicator)!
+        
+        leftHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, 10, 20), track: self, symbol: "[")
+        rightHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, 10, 20), track: self, symbol: "]")
+        sliderInfo = RangeSliderInfo(frame: NSMakeRect(0, frame.height/2 - 50, frame.width, 100), track: self)
+        
+        self.addSubview(sliderInfo!)
+        self.addSubview(leftHandle!)
+        self.addSubview(rightHandle!)
     }
     
     
@@ -51,7 +66,15 @@ class RangeSliderHorizontalTrack: NSView {
         horizontalTrack.close()
         horizontalTrack.stroke()
         horizontalTrack.fill()
-//         Swift.print("RangeSliderHorizontalTrack size is \(frame)")
+        
+        NSDottedFrameRect(dirtyRect)
+        
+        let sliderFrame = NSMakeRect(0, frame.height/2 - 50, frame.width, 100)
+        sliderInfo?.setFrameSize(sliderFrame.size)
+        sliderInfo?.setFrameOrigin(sliderFrame.origin)
+        leftHandle?.needsDisplay = true
+        rightHandle?.needsDisplay = true
+        sliderInfo?.needsDisplay = true
     }
     
     func getTrackLength() -> Int {
