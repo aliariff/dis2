@@ -89,7 +89,7 @@ class RangeSliderHandle: NSView {
         if (clicked && currentValue >= (slider?.minimumValue)! &&
             currentValue <= (slider?.maximumValue)! &&
             (track?.currentMinValue)! <= (track?.currentMaxValue)!) {
-            
+
             var newValue = Int (Double (newDragLocation.x - 20) / pixelSize) + (slider?.minimumValue)!
             newValue = max((slider?.minimumValue)!, newValue)
             newValue = min((slider?.maximumValue)!, newValue)
@@ -104,8 +104,7 @@ class RangeSliderHandle: NSView {
 
             // redraw
             needsDisplay = true
-            track?.sliderInfo?.needsDisplay = true
-            track?.indicator?.needsDisplay = true
+            track?.needsDisplay = true
         }
     }
 
