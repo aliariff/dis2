@@ -74,8 +74,7 @@ class RangeSliderHandle: NSView {
             NSForegroundColorAttributeName: textColor,
         ] as [String : Any]
         handle.draw(at: NSMakePoint(0, 0), withAttributes: textFontAttributes)
-        track?.sliderInfo?.needsDisplay = true
-        NSDottedFrameRect(dirtyRect)
+        // NSDottedFrameRect(dirtyRect)
     }
 
     override func mouseDown(with theEvent: NSEvent) {
@@ -94,8 +93,6 @@ class RangeSliderHandle: NSView {
         if (clicked && currentValue >= (slider?.minimumValue)! &&
             currentValue <= (slider?.maximumValue)! &&
             (track?.currentMinValue)! <= (track?.currentMaxValue)!) {
-
-            needsDisplay = true
             var newValue = Int (Double (newDragLocation.x - 20) / pixelSize) + (slider?.minimumValue)!
             newValue = max((slider?.minimumValue)!, newValue)
             newValue = min((slider?.maximumValue)!, newValue)
@@ -107,6 +104,11 @@ class RangeSliderHandle: NSView {
                 track?.currentMaxValue = newValue
                 currentValue = newValue
             }
+
+            // redraw
+            needsDisplay = true
+            track?.sliderInfo?.needsDisplay = true
+            track?.indicator?.needsDisplay = true
         }
     }
 

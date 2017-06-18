@@ -41,7 +41,7 @@ class RangeSliderInfo: NSView {
         labelMinValue.draw(at: NSMakePoint(minX!, 20))
         labelMaxValue.draw(at: NSMakePoint(maxX!, 65))
 
-        NSDottedFrameRect(dirtyRect)
+        // NSDottedFrameRect(dirtyRect)
     }
 
 }

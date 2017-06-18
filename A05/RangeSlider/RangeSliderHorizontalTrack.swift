@@ -13,6 +13,7 @@ class RangeSliderHorizontalTrack: NSView {
     public var leftHandle : RangeSliderHandle?
     public var rightHandle : RangeSliderHandle?
     public var sliderInfo : RangeSliderInfo?
+    public var indicator : RangeSliderIndicator?
     public var currentMinValue : Int!
     public var currentMaxValue : Int!
 
@@ -30,8 +31,10 @@ class RangeSliderHorizontalTrack: NSView {
         leftHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, 10, 20), track: self, symbol: "[")
         rightHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, 10, 20), track: self, symbol: "]")
         sliderInfo = RangeSliderInfo(frame: NSMakeRect(0, frame.height/2 - 50, frame.width, 100), track: self)
+        indicator = RangeSliderIndicator(frame: NSMakeRect(15, frame.height/2 - 15, frame.width - 30, 30), track: self)
 
         self.addSubview(sliderInfo!)
+        self.addSubview(indicator!)
         self.addSubview(leftHandle!)
         self.addSubview(rightHandle!)
     }
@@ -63,11 +66,14 @@ class RangeSliderHorizontalTrack: NSView {
         horizontalTrack.stroke()
         horizontalTrack.fill()
 
-        NSDottedFrameRect(dirtyRect)
+        // NSDottedFrameRect(dirtyRect)
 
         let sliderFrame = NSMakeRect(0, frame.height/2 - 50, frame.width, 100)
+        let indicatorFrame = NSMakeRect(15, frame.height/2 - 15, frame.width - 30, 30)
         sliderInfo?.setFrameSize(sliderFrame.size)
         sliderInfo?.setFrameOrigin(sliderFrame.origin)
+        indicator?.setFrameSize(indicatorFrame.size)
+        indicator?.setFrameOrigin(indicatorFrame.origin)
         leftHandle?.needsDisplay = true
         rightHandle?.needsDisplay = true
         sliderInfo?.needsDisplay = true
