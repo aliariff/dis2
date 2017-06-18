@@ -12,9 +12,9 @@ class RangeSliderHandle: NSView {
     private var track : RangeSliderHorizontalTrack?
     private var slider : RangeSlider?
     private var clicked : Bool = false
-    private var currentPos : NSPoint?
-    public var currentValue : Int! = 0
-    private var pixelSize : Double = 0.0
+    public var currentPos : NSPoint?
+    public var currentValue : Int = 0
+    public var pixelSize : Double = 0.0
     private var symbol : String = ""
 
     required init?(coder: NSCoder) {
@@ -55,10 +55,6 @@ class RangeSliderHandle: NSView {
         return symbol == "]"
     }
 
-    func getCurrentPos() -> NSPoint {
-        return currentPos!
-    }
-
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
@@ -93,6 +89,7 @@ class RangeSliderHandle: NSView {
         if (clicked && currentValue >= (slider?.minimumValue)! &&
             currentValue <= (slider?.maximumValue)! &&
             (track?.currentMinValue)! <= (track?.currentMaxValue)!) {
+            
             var newValue = Int (Double (newDragLocation.x - 20) / pixelSize) + (slider?.minimumValue)!
             newValue = max((slider?.minimumValue)!, newValue)
             newValue = min((slider?.maximumValue)!, newValue)

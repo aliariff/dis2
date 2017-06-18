@@ -35,8 +35,8 @@ class RangeSliderInfo: NSView {
         let maxValue = Int ((rigthHandle?.currentValue)!)
         let labelMinValue: NSString = NSString.init(string: "\(minValue)")
         let labelMaxValue: NSString = NSString.init(string: "\(maxValue)")
-        let minX = leftHandle?.getCurrentPos().x
-        let maxX = rigthHandle?.getCurrentPos().x
+        let minX = leftHandle?.currentPos?.x
+        let maxX = rigthHandle?.currentPos?.x
 
         labelMinValue.draw(at: NSMakePoint(minX!, 20))
         labelMaxValue.draw(at: NSMakePoint(maxX!, 65))
