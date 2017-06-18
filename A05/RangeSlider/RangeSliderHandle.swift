@@ -9,13 +9,12 @@
 import Cocoa
 
 class RangeSliderHandle: NSView {
-    private var lastDragLocation : NSPoint?
     private var clicked : Bool = false
     private var slider : RangeSlider?
     private var track : RangeSliderHorizontalTrack?
     private var currentValue : Int = 0
-    private var currentPos : NSPoint?
     private var pixelSize : Double = 0.0
+    private var symbol : String = ""
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -25,15 +24,33 @@ class RangeSliderHandle: NSView {
         super.init(frame: frameRect)
     }
     
-    init(frame frameRect: NSRect, slider rangeSlider: RangeSlider, track trackSlider: RangeSliderHorizontalTrack) {
+    init(frame frameRect: NSRect, slider rangeSlider: RangeSlider, track trackSlider: RangeSliderHorizontalTrack, symbol sym: String) {
         super.init(frame: frameRect)
         slider = rangeSlider
         track = trackSlider
-        currentValue = (slider?.leftIndicator)!
+        symbol = sym
+        if (leftHandle()) {
+            currentValue = (slider?.leftIndicator)!
+        } else {
+            currentValue = (slider?.rightIndicator)!
+        }
     }
     
     func calculate() {
         pixelSize = Double ((track?.getTrackLength())!) / Double ((track?.getRangeValue())!)
+        let x = CGFloat (currentValue) * CGFloat (pixelSize)
+        let y = (slider?.frame.height)! / 2
+        let thisOrigin = NSMakePoint(x + 20, y - 10)
+        setFrameOrigin(thisOrigin)
+        setFrameSize(NSMakeSize(10, 20))
+    }
+    
+    func leftHandle() -> Bool {
+        return symbol == "["
+    }
+    
+    func rightHandle() -> Bool {
+        return symbol == "]"
     }
     
     override func draw(_ dirtyRect: NSRect) {
@@ -44,33 +61,19 @@ class RangeSliderHandle: NSView {
         if (clicked) {
             textColor = NSColor.blue
         }
-        let y = (slider?.frame.height)! / 2
-        let handle: NSString = "["
+        let handle = NSString.init(string: symbol)
         let font = NSFont(name: "Helvetica Bold", size: 20.0)
         let textFontAttributes = [
             NSFontAttributeName : font!,
             NSForegroundColorAttributeName: textColor,
         ] as [String : Any]
-        let x = CGFloat (currentValue) * CGFloat (pixelSize)
-        currentPos = NSMakePoint(x + 20, y - 10)
-        handle.draw(at: currentPos!, withAttributes: textFontAttributes)
+        handle.draw(at: NSMakePoint(0, 0), withAttributes: textFontAttributes)
         
-        let labelValue: NSString = NSString.init(string: "\(currentValue)")
-        labelValue.draw(at: NSMakePoint(x + 17, y - 30))
         NSDottedFrameRect(dirtyRect)
     }
     
     override func mouseDown(with theEvent: NSEvent) {
-//         mouse coordinates within this view's coordinate system
-        lastDragLocation = superview!.convert(theEvent.locationInWindow, from: nil)
-        let y = (lastDragLocation?.y)! - 10
-        lastDragLocation?.y -= 10
-        if ((currentPos?.x)! + 7 > (lastDragLocation?.x)! &&
-            (currentPos?.x)! - 3 < (lastDragLocation?.x)! &&
-            (currentPos?.y)! + 15 > y &&
-            (currentPos?.y)! - 10 < y) {
-            clicked = true
-        }
+        clicked = true
     }
     
     override func mouseUp(with theEvent: NSEvent) {
@@ -81,11 +84,12 @@ class RangeSliderHandle: NSView {
     override func mouseDragged(with theEvent: NSEvent) {
 //         mouse coordinates within this view's coordinate system
         let newDragLocation = superview!.convert(theEvent.locationInWindow, from:nil)
-        if (clicked && newDragLocation.x >= 20 && newDragLocation.x <= (slider?.frame.width)! - 29) {
+        if (clicked && currentValue >= (slider?.minimumValue)! && currentValue <= (slider?.maximumValue)!) {
             needsDisplay = true
-            
-            lastDragLocation = newDragLocation
             currentValue = Int (Double (newDragLocation.x - 20) / pixelSize)
+            currentValue = max((slider?.minimumValue)!, currentValue)
+            currentValue = min((slider?.maximumValue)!, currentValue)
+            Swift.print(currentValue)
         }
     }
 }
