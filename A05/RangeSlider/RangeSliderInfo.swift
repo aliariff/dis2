@@ -11,7 +11,7 @@ import Cocoa
 class RangeSliderInfo: NSView {
     private var track : RangeSliderHorizontalTrack?
     private var leftHandle: RangeSliderHandle?
-    private var rigthHandle: RangeSliderHandle?
+    private var rightHandle: RangeSliderHandle?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -25,18 +25,18 @@ class RangeSliderInfo: NSView {
         super.init(frame: frameRect)
         track = trackSlider
         leftHandle = track?.leftHandle
-        rigthHandle = track?.rightHandle
+        rightHandle = track?.rightHandle
     }
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
         let minValue = Int ((leftHandle?.currentValue)!)
-        let maxValue = Int ((rigthHandle?.currentValue)!)
+        let maxValue = Int ((rightHandle?.currentValue)!)
         let labelMinValue: NSString = NSString.init(string: "\(minValue)")
         let labelMaxValue: NSString = NSString.init(string: "\(maxValue)")
         let minX = leftHandle?.currentPos?.x
-        let maxX = rigthHandle?.currentPos?.x
+        let maxX = rightHandle?.currentPos?.x
 
         labelMinValue.draw(at: NSMakePoint(minX!, 20))
         labelMaxValue.draw(at: NSMakePoint(maxX!, 65))

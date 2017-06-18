@@ -68,15 +68,23 @@ class RangeSliderHorizontalTrack: NSView {
 
         // NSDottedFrameRect(dirtyRect)
 
+        autoReize()
+
+        // redraw
+        leftHandle?.needsDisplay = true
+        rightHandle?.needsDisplay = true
+        sliderInfo?.needsDisplay = true
+    }
+
+    func autoReize() {
         let sliderFrame = NSMakeRect(0, frame.height/2 - 50, frame.width, 100)
-        let indicatorFrame = NSMakeRect(15, frame.height/2 - 15, frame.width - 30, 30)
+        let w = (rightHandle?.currentPos?.x)! - (leftHandle?.currentPos?.x)!
+        let indicatorFrame = NSMakeRect((leftHandle?.currentPos?.x)!, (frame.height)/2 - 10, w, 20)
+
         sliderInfo?.setFrameSize(sliderFrame.size)
         sliderInfo?.setFrameOrigin(sliderFrame.origin)
         indicator?.setFrameSize(indicatorFrame.size)
         indicator?.setFrameOrigin(indicatorFrame.origin)
-        leftHandle?.needsDisplay = true
-        rightHandle?.needsDisplay = true
-        sliderInfo?.needsDisplay = true
     }
 
     func getTrackLength() -> Int {

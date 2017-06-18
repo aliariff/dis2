@@ -11,7 +11,7 @@ import Cocoa
 class RangeSliderIndicator: NSView {
     private var track : RangeSliderHorizontalTrack?
     private var leftHandle: RangeSliderHandle?
-    private var rigthHandle: RangeSliderHandle?
+    private var rightHandle: RangeSliderHandle?
     private var clicked : Bool = false
     private var lastDragLocation : NSPoint?
 
@@ -27,15 +27,11 @@ class RangeSliderIndicator: NSView {
         super.init(frame: frameRect)
         track = trackSlider
         leftHandle = track?.leftHandle
-        rigthHandle = track?.rightHandle
+        rightHandle = track?.rightHandle
     }
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        let w = (rigthHandle?.currentPos?.x)! - (leftHandle?.currentPos?.x)!
-        let thisFrame = NSMakeRect((leftHandle?.currentPos?.x)! + 3, (track?.frame.height)!/2 - 10, w, 20)
-        setFrameSize(thisFrame.size)
-        setFrameOrigin(thisFrame.origin)
 
         track?.slider?.indicatorColor.set()
         NSRectFill(dirtyRect)
@@ -62,11 +58,15 @@ class RangeSliderIndicator: NSView {
             if (offset == 0) {
                 return
             }
-            track?.leftHandle?.currentValue += offset
-            track?.rightHandle?.currentValue += offset
 
-            needsDisplay = true
-            track?.needsDisplay = true
+            if ((track?.leftHandle?.currentValue)! + offset >= (track?.slider?.minimumValue)! &&
+                (track?.rightHandle?.currentValue)! + offset <= (track?.slider?.maximumValue)!) {
+
+                track?.leftHandle?.currentValue += offset
+                track?.rightHandle?.currentValue += offset
+                needsDisplay = true
+                track?.needsDisplay = true
+            }
 
             lastDragLocation = newDragLocation;
         }
