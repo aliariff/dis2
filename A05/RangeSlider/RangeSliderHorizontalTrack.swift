@@ -82,7 +82,7 @@ class RangeSliderHorizontalTrack: NSView {
 
         let sliderFrame = NSMakeRect(0, frame.height/2 - 50, frame.width, 100)
         let w = (rightHandle?.currentPos?.x)! - (leftHandle?.currentPos?.x)!
-        let indicatorFrame = NSMakeRect((leftHandle?.currentPos?.x)!, (frame.height)/2 - 10, w, 20)
+        let indicatorFrame = NSMakeRect((leftHandle?.currentPos?.x)! + 3, (frame.height)/2 - 10, w, 20)
 
         sliderInfo?.setFrameSize(sliderFrame.size)
         sliderInfo?.setFrameOrigin(sliderFrame.origin)
