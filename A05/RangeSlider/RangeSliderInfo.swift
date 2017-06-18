@@ -31,8 +31,8 @@ class RangeSliderInfo: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        let minValue = Int ((track?.currentMinValue)!)
-        let maxValue = Int ((track?.currentMaxValue)!)
+        let minValue = Int ((leftHandle?.currentValue)!)
+        let maxValue = Int ((rigthHandle?.currentValue)!)
         let labelMinValue: NSString = NSString.init(string: "\(minValue)")
         let labelMaxValue: NSString = NSString.init(string: "\(maxValue)")
         let minX = leftHandle?.getCurrentPos().x

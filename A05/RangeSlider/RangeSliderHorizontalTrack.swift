@@ -13,8 +13,8 @@ class RangeSliderHorizontalTrack: NSView {
     public var leftHandle : RangeSliderHandle?
     public var rightHandle : RangeSliderHandle?
     public var sliderInfo : RangeSliderInfo?
-    public var currentMinValue : Int = 0
-    public var currentMaxValue : Int = 0
+    public var currentMinValue : Int!
+    public var currentMaxValue : Int!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -27,9 +27,6 @@ class RangeSliderHorizontalTrack: NSView {
     init(frame frameRect: NSRect, slider rangeSlider: RangeSlider) {
         super.init(frame: frameRect)
         slider = rangeSlider
-        currentMinValue = (slider?.leftIndicator)!
-        currentMaxValue = (slider?.rightIndicator)!
-
         leftHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, 10, 20), track: self, symbol: "[")
         rightHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, 10, 20), track: self, symbol: "]")
         sliderInfo = RangeSliderInfo(frame: NSMakeRect(0, frame.height/2 - 50, frame.width, 100), track: self)

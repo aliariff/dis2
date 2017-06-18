@@ -39,17 +39,21 @@ class RangeSlider: NSView {
         }
     }
 
-    @IBInspectable var leftIndicator : Int = 50 {
+    @IBInspectable var leftIndicator : Int = 10 {
         didSet {
             // redraw!
-            needsDisplay = true
+            horizontalTrack?.leftHandle?.currentValue = leftIndicator
+            horizontalTrack?.leftHandle?.calculate()
+            horizontalTrack?.needsDisplay = true
         }
     }
 
-    @IBInspectable var rightIndicator : Int = 75 {
+    @IBInspectable var rightIndicator : Int = 80 {
         didSet {
             // redraw!
-            needsDisplay = true
+            horizontalTrack?.rightHandle?.currentValue = rightIndicator
+            horizontalTrack?.rightHandle?.calculate()
+            horizontalTrack?.needsDisplay = true
         }
     }
 

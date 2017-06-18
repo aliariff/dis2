@@ -13,7 +13,7 @@ class RangeSliderHandle: NSView {
     private var slider : RangeSlider?
     private var clicked : Bool = false
     private var currentPos : NSPoint?
-    private var currentValue : Int! = 0
+    public var currentValue : Int! = 0
     private var pixelSize : Double = 0.0
     private var symbol : String = ""
 
@@ -31,20 +31,20 @@ class RangeSliderHandle: NSView {
         slider = track?.slider
         symbol = sym
         currentPos = frame.origin
-        if (leftHandle()) {
-            currentValue = slider?.leftIndicator
-        } else {
-            currentValue = slider?.rightIndicator
-        }
     }
 
     func calculate() {
         pixelSize = Double ((track?.getTrackLength())!) / Double ((track?.getRangeValue())!)
-        let x = CGFloat (currentValue) * CGFloat (pixelSize)
+        let x = CGFloat (currentValue - (slider?.minimumValue)!) * CGFloat (pixelSize)
         let y = (slider?.frame.height)! / 2
         let thisOrigin = NSMakePoint(x + 20, y - 10)
         currentPos = thisOrigin
         setFrameOrigin(thisOrigin)
+        if (leftHandle()) {
+            track?.currentMinValue = currentValue
+        } else {
+            track?.currentMaxValue = currentValue
+        }
     }
 
     func leftHandle() -> Bool {
@@ -96,7 +96,7 @@ class RangeSliderHandle: NSView {
             (track?.currentMinValue)! <= (track?.currentMaxValue)!) {
 
             needsDisplay = true
-            var newValue = Int (Double (newDragLocation.x - 20) / pixelSize)
+            var newValue = Int (Double (newDragLocation.x - 20) / pixelSize) + (slider?.minimumValue)!
             newValue = max((slider?.minimumValue)!, newValue)
             newValue = min((slider?.maximumValue)!, newValue)
 
