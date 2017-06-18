@@ -37,20 +37,29 @@ class RangeSliderHorizontalTrack: NSView {
         let minValue: NSString = NSString.init(string: "\(min)")
         let maxValue: NSString = NSString.init(string: "\(max)")
         let minValuePoint = CGPoint(x: 0, y: h - offset)
-        let maxValuePoint = CGPoint(x: w - 50, y: h - offset)
+        let maxValuePoint = CGPoint(x: w - 20, y: h - offset)
         
-        // draw min and value at the end of the line
+//         draw min and value at the end of the line
         minValue.draw(at: minValuePoint)
         maxValue.draw(at: maxValuePoint)
         
-        // draw the horizontal line
+//         draw the horizontal line
         horizontalTrack.lineWidth = 2.0
         horizontalTrack.move(to: CGPoint(x: 20, y: h))
-        horizontalTrack.line(to: CGPoint(x: w - 60, y: h))
+        horizontalTrack.line(to: CGPoint(x: w - 30, y: h))
         slider?.lineColor.set()
         horizontalTrack.close()
         horizontalTrack.stroke()
         horizontalTrack.fill()
-        Swift.print("RangeSliderHorizontalTrack size is \(self.frame.width) \(self.frame.height)")
+//         Swift.print("RangeSliderHorizontalTrack size is \(frame)")
+    }
+    
+    func getTrackLength() -> Int {
+//        substract with left and right offset
+        return Int (slider!.frame.width - CGFloat (50))
+    }
+    
+    func getRangeValue() -> Int {
+        return (slider?.maximumValue)! - (slider?.minimumValue)!
     }
 }

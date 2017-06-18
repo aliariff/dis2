@@ -54,17 +54,25 @@ class RangeSlider: NSView {
     }
     
     var horizontalTrack : RangeSliderHorizontalTrack?
+    var leftHandle : RangeSliderHandle?
+    var rightHandle : RangeSliderHandle?
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        horizontalTrack = RangeSliderHorizontalTrack(frame: self.frame, slider: self)
+        horizontalTrack = RangeSliderHorizontalTrack(frame: NSMakeRect(0, 0, frame.width, frame.height), slider: self)
+        leftHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, frame.width, frame.height), slider: self, track: horizontalTrack!)
+//        rightHandle = RangeSliderHandle(frame: self.frame, slider: self)
+
         self.addSubview(horizontalTrack!)
+        self.addSubview(leftHandle!)
+//        self.addSubview(rightHandle!)
     }
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        horizontalTrack?.setFrameSize(self.frame.size)
+        horizontalTrack?.setFrameSize(frame.size)
+        leftHandle?.setFrameSize(frame.size)
     }
 
 }
