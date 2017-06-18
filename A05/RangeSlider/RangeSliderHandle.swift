@@ -16,15 +16,15 @@ class RangeSliderHandle: NSView {
     private var currentValue : Int! = 0
     private var pixelSize : Double = 0.0
     private var symbol : String = ""
-    
+
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    
+
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
     }
-    
+
     init(frame frameRect: NSRect, track trackSlider: RangeSliderHorizontalTrack, symbol sym: String) {
         super.init(frame: frameRect)
         track = trackSlider
@@ -37,7 +37,7 @@ class RangeSliderHandle: NSView {
             currentValue = slider?.rightIndicator
         }
     }
-    
+
     func calculate() {
         pixelSize = Double ((track?.getTrackLength())!) / Double ((track?.getRangeValue())!)
         let x = CGFloat (currentValue) * CGFloat (pixelSize)
@@ -46,22 +46,22 @@ class RangeSliderHandle: NSView {
         currentPos = thisOrigin
         setFrameOrigin(thisOrigin)
     }
-    
+
     func leftHandle() -> Bool {
         return symbol == "["
     }
-    
+
     func rightHandle() -> Bool {
         return symbol == "]"
     }
-    
+
     func getCurrentPos() -> NSPoint {
         return currentPos!
     }
-    
+
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        
+
         calculate()
         var textColor = NSColor.black
         if (clicked) {
@@ -77,29 +77,29 @@ class RangeSliderHandle: NSView {
         track?.sliderInfo?.needsDisplay = true
         NSDottedFrameRect(dirtyRect)
     }
-    
+
     override func mouseDown(with theEvent: NSEvent) {
         clicked = true
         needsDisplay = true
     }
-    
+
     override func mouseUp(with theEvent: NSEvent) {
         clicked = false
         needsDisplay = true
     }
-    
+
     override func mouseDragged(with theEvent: NSEvent) {
-//         mouse coordinates within this view's coordinate system
+        // mouse coordinates within this view's coordinate system
         let newDragLocation = superview!.convert(theEvent.locationInWindow, from:nil)
         if (clicked && currentValue >= (slider?.minimumValue)! &&
             currentValue <= (slider?.maximumValue)! &&
             (track?.currentMinValue)! <= (track?.currentMaxValue)!) {
-            
+
             needsDisplay = true
             var newValue = Int (Double (newDragLocation.x - 20) / pixelSize)
             newValue = max((slider?.minimumValue)!, newValue)
             newValue = min((slider?.maximumValue)!, newValue)
-            
+
             if (leftHandle() && newValue < (track?.currentMaxValue)!) {
                 track?.currentMinValue = newValue
                 currentValue = newValue
@@ -109,4 +109,5 @@ class RangeSliderHandle: NSView {
             }
         }
     }
+
 }
