@@ -41,19 +41,25 @@ class RangeSlider: NSView {
 
     @IBInspectable var leftIndicator : Int = 10 {
         didSet {
-            // redraw!
+            if (minimumValue > leftIndicator) {
+                leftIndicator = minimumValue
+            }
             horizontalTrack?.leftHandle?.currentValue = leftIndicator
             horizontalTrack?.leftHandle?.calculate()
-            horizontalTrack?.needsDisplay = true
+            // redraw!
+            needsDisplay = true
         }
     }
 
     @IBInspectable var rightIndicator : Int = 80 {
         didSet {
-            // redraw!
+            if (maximumValue < rightIndicator) {
+                rightIndicator = maximumValue
+            }
             horizontalTrack?.rightHandle?.currentValue = rightIndicator
             horizontalTrack?.rightHandle?.calculate()
-            horizontalTrack?.needsDisplay = true
+            // redraw!
+            needsDisplay = true
         }
     }
 
