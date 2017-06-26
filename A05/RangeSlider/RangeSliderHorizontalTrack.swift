@@ -68,7 +68,7 @@ class RangeSliderHorizontalTrack: NSView {
 
         // NSDottedFrameRect(dirtyRect)
 
-        autoReize()
+        autoResize()
 
         // redraw
         leftHandle?.needsDisplay = true
@@ -76,7 +76,7 @@ class RangeSliderHorizontalTrack: NSView {
         sliderInfo?.needsDisplay = true
     }
 
-    func autoReize() {
+    func autoResize() {
         leftHandle?.calculate()
         rightHandle?.calculate()
 
