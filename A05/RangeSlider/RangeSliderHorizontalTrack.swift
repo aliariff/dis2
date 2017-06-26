@@ -2,6 +2,9 @@
 //  RangeSliderHorizontalTrack.swift
 //  RangeSlider
 //
+//  DIS II Group 7
+//  Ali Ariff, Andi Heynoum Dala Rifat, Zain Ahmed S.
+//
 //  Created by Ali Ariff on 6/17/17.
 //  Copyright © 2017 Ali Ariff. All rights reserved.
 //
@@ -28,11 +31,15 @@ class RangeSliderHorizontalTrack: NSView {
     init(frame frameRect: NSRect, slider rangeSlider: RangeSlider) {
         super.init(frame: frameRect)
         slider = rangeSlider
+        // create left and right handle
         leftHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, 10, 20), track: self, symbol: "[")
         rightHandle = RangeSliderHandle(frame: NSMakeRect(0, 0, 10, 20), track: self, symbol: "]")
+        // create the sliderInfo which contains label to show the current value from leftHandle and rightHandle
         sliderInfo = RangeSliderInfo(frame: NSMakeRect(0, frame.height/2 - 50, frame.width, 100), track: self)
+        // create the indicatior that shows the covered range area as well as leftHandle and rightHandle (e.g area with orange color in the example)
         indicator = RangeSliderIndicator(frame: NSMakeRect(15, frame.height/2 - 15, frame.width - 30, 30), track: self)
 
+        // add all of the objects as subview of horizontalTrack
         self.addSubview(sliderInfo!)
         self.addSubview(indicator!)
         self.addSubview(leftHandle!)
@@ -42,6 +49,7 @@ class RangeSliderHorizontalTrack: NSView {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
+        // initialize variable and value needed to draw horizontalTrack
         let horizontalTrack = NSBezierPath()
         let w = frame.width
         let h = frame.height / 2
@@ -53,7 +61,7 @@ class RangeSliderHorizontalTrack: NSView {
         let minValuePoint = CGPoint(x: 0, y: h - offset)
         let maxValuePoint = CGPoint(x: w - 20, y: h - offset)
 
-        // draw min and value at the end of the line
+        // draw min and max value at the end of the line
         minValue.draw(at: minValuePoint)
         maxValue.draw(at: maxValuePoint)
 
@@ -77,6 +85,7 @@ class RangeSliderHorizontalTrack: NSView {
     }
 
     func autoResize() {
+        // handle when resizing window happen
         leftHandle?.calculate()
         rightHandle?.calculate()
 

@@ -2,6 +2,9 @@
 //  RangeSlider.swift
 //  RangeSlider
 //
+//  DIS II Group 7
+//  Ali Ariff, Andi Heynoum Dala Rifat, Zain Ahmed S.
+//
 //  Created by Ali Ariff on 6/16/17.
 //  Copyright © 2017 Ali Ariff. All rights reserved.
 //
@@ -41,9 +44,11 @@ class RangeSlider: NSView {
 
     @IBInspectable var leftIndicator : Int = 10 {
         didSet {
+            // basic validation
             if (minimumValue > leftIndicator) {
                 leftIndicator = minimumValue
             }
+            // set the left handle current value and calculate
             horizontalTrack?.leftHandle?.currentValue = leftIndicator
             horizontalTrack?.leftHandle?.calculate()
             // redraw!
@@ -53,9 +58,11 @@ class RangeSlider: NSView {
 
     @IBInspectable var rightIndicator : Int = 80 {
         didSet {
+            // basic validation
             if (maximumValue < rightIndicator) {
                 rightIndicator = maximumValue
             }
+            // set the right handle current value and calculate
             horizontalTrack?.rightHandle?.currentValue = rightIndicator
             horizontalTrack?.rightHandle?.calculate()
             // redraw!
@@ -68,12 +75,14 @@ class RangeSlider: NSView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
 
+        // create horizontalTrack object and add as subview
         horizontalTrack = RangeSliderHorizontalTrack(frame: NSMakeRect(0, 0, frame.width, frame.height), slider: self)
         self.addSubview(horizontalTrack!)
     }
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
+        // handle when resizing window happens, pass the new window size to the horizontalTrack object
         horizontalTrack?.setFrameSize(frame.size)
     }
 
