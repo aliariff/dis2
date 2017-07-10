@@ -4,7 +4,6 @@ var io = require('socket.io')(http);
 var path = require('path');
 var os = require('os');
 var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
 var cache_images = {};
 var config = {
     port: 1234
