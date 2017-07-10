@@ -10,9 +10,11 @@ var config = {
 };
 
 app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
+app.use(bodyParser.urlencoded({
+    extended: true
+})); // support encoded bodies
 
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
@@ -22,7 +24,7 @@ app.post('/image', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-    for(key in cache_images) {
+    for (key in cache_images) {
         socket.emit('live-stream', {
             cam_id: key,
             image_base64: cache_images[key]
