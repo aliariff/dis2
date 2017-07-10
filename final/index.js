@@ -9,8 +9,11 @@ var config = {
     port: 1234
 };
 
-app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.json({
+    limit: '2mb'
+})); // support json encoded bodies
 app.use(bodyParser.urlencoded({
+    limit: '2mb',
     extended: true
 })); // support encoded bodies
 
