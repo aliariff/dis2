@@ -53,7 +53,7 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
     <script>
-        var socket = io.connect('http://localhost:1234');
+        var socket = io.connect();
         socket.on('live-stream', function(data) {
             var div = $('#stream' + data.cam_id);
             div.show();
