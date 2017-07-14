@@ -6,7 +6,7 @@ var os = require('os');
 var bodyParser = require('body-parser');
 var cache_images = {};
 var config = {
-    port: 1234
+    port: 500
 };
 
 app.use(bodyParser.json({

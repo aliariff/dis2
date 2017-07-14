@@ -4,7 +4,7 @@ import requests
 import base64
 
 def send_image(base64_string):
-  url = "http://134.61.95.23:1234/image"
+  url = "https://amedeo.informatik.rwth-aachen.de/image"
   payload = { 'cam_id': '1', 'image_base64': base64_string }
   r = requests.post(url, data = payload)
   print r.text
@@ -25,7 +25,7 @@ def filenames():
 with picamera.PiCamera() as camera:
   camera.resolution = (640, 480)
   camera.framerate = 30
-  camera.start_preview()
+  # camera.start_preview()
 
   time.sleep(2) # Camera Initialize
   camera.capture_sequence(filenames(), use_video_port=True)
