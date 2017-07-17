@@ -21,6 +21,13 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/active', function(req, res) {
+    data = {
+        active_camera: Object.keys(cache_images).length
+    }
+    res.send(JSON.stringify(data));
+});
+
 app.post('/image', function(req, res) {
     sendImage(req.body);
     res.send('Image Received');
