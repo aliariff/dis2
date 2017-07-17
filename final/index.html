@@ -69,7 +69,7 @@
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
     <script>
-        var socket = io.connect();
+        var socket = io.connect({ secure: true });
         socket.on('live-stream', function(data) {
             var div = $('#stream' + data.cam_id);
             div.show();
