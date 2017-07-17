@@ -1,4 +1,5 @@
-var app = require('express')();
+var express = require('express');
+var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
 var path = require('path');
@@ -9,6 +10,7 @@ var config = {
     port: 500
 };
 
+app.use(express.static('public'));
 app.use(bodyParser.json({
     limit: '2mb'
 })); // support json encoded bodies

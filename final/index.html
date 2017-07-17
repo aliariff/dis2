@@ -9,6 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/slimbox2.css" rel="stylesheet">
 
     <style type="text/css">
         html {
@@ -68,15 +69,25 @@
     <!-- Bootstrap JavaScript -->
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <script src="js/slimbox2.js"></script>
     <script>
         var socket = io.connect({ secure: true });
         socket.on('live-stream', function(data) {
             var div = $('#stream' + data.cam_id);
             div.show();
-            div.find('img').attr('src', 'data:image/jpg;base64,' + data.image_base64);
+            var a = div.find('a');
+            var img = div.find('img');
+
+            a.slimbox({}, function(el) {
+                return [el.href, $(el).find('img').attr('alt')];
+            })
+            a.attr('href', 'data:image/jpg;base64,' + data.image_base64);
+            img.attr('src', 'data:image/jpg;base64,' + data.image_base64);
+            img.attr('alt', 'Camera ' + data.cam_id);
         });
         socket.on('dead-stream', function(data) {
             $('#stream' + data.cam_id).hide();
+            $('#stream' + data.cam_id).find('a').unbind('click');
         });
     </script>
 </head>
@@ -89,19 +100,19 @@
 
     <div class="row">
         <div style="display:none" class="col-md-6 col-sm-12 col-xs-12" id="stream1">
-            <img class="img-responsive" src="">
+            <a href="#"><img class="img-responsive" src=""></a>
             <p><small>Camera 1</small></p>
         </div>
         <div  style="display:none" class="col-md-6 col-sm-12 col-xs-12" id="stream2">
-            <img class="img-responsive" src="">
+            <a href="#"><img class="img-responsive" src=""></a>
             <p><small>Camera 2</small></p>
         </div>
         <div  style="display:none" class="col-md-6 col-sm-12 col-xs-12" id="stream3">
-            <img class="img-responsive" src="">
+            <a href="#"><img class="img-responsive" src=""></a>
             <p><small>Camera 3</small></p>
         </div>
         <div  style="display:none" class="col-md-6 col-sm-12 col-xs-12" id="stream4">
-            <img class="img-responsive" src="">
+            <a href="#"><img class="img-responsive" src=""></a>
             <p><small>Camera 4</small></p>
         </div>
     </div>
