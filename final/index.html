@@ -75,6 +75,9 @@
             div.show();
             div.find('img').attr('src', 'data:image/jpg;base64,' + data.image_base64);
         });
+        socket.on('dead-stream', function(data) {
+            $('#stream' + data.cam_id).hide();
+        });
     </script>
 </head>
 

@@ -37,7 +37,7 @@ io.on('connection', function(socket) {
     for (key in cache_images) {
         socket.emit('live-stream', {
             cam_id: key,
-            image_base64: cache_images[key]
+            image_base64: cache_images[key]['image']
         });
     }
 });
@@ -48,7 +48,20 @@ http.listen(config['port'], function() {
 
 function sendImage(data) {
     if (data.cam_id && data.image_base64) {
-        cache_images[data.cam_id] = data.image_base64;
+        cache_images[data.cam_id] = {
+            image: data.image_base64,
+            timestamp: new Date().getTime()
+        };
         io.sockets.emit('live-stream', data);
     }
 }
+
+setInterval(function() {
+    for (key in cache_images) {
+        timestamp = cache_images[key]['timestamp'];
+        if (new Date().getTime() - timestamp > 10000) {
+            delete cache_images[key];
+            io.sockets.emit('dead-stream', { cam_id: key });
+        }
+    }
+}, 1000);
