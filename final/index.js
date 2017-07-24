@@ -66,7 +66,7 @@ function sendImage(data) {
 function toggle_disco(state) {
     disco = state;
     data = { disco_state: state }
-    io.sockets.broadcast('disco', data);
+    io.sockets.emit('disco', data);
     res.send(JSON.stringify(data));
 }
 
