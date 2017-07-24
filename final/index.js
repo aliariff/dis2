@@ -5,6 +5,7 @@ var io = require('socket.io')(http);
 var path = require('path');
 var os = require('os');
 var bodyParser = require('body-parser');
+var disco = false;
 var cache_images = {};
 var config = {
     port: 500
@@ -35,6 +36,17 @@ app.post('/image', function(req, res) {
     res.send('Image Received');
 });
 
+app.get('/disco', function(req, res) {
+    disco(!disco);
+});
+
+function disco(state) {
+    disco = state;
+    data = { disco_state: state }
+    io.sockets.broadcast('disco', data);
+    res.send(JSON.stringify(data));
+}
+
 io.on('connection', function(socket) {
     for (key in cache_images) {
         socket.emit('live-stream', {
@@ -61,7 +73,7 @@ function sendImage(data) {
 setInterval(function() {
     for (key in cache_images) {
         timestamp = cache_images[key]['timestamp'];
-        if (new Date().getTime() - timestamp > 10000) {
+        if (new Date().getTime() - timestamp > 60000) {
             delete cache_images[key];
             io.sockets.emit('dead-stream', { cam_id: key });
         }
