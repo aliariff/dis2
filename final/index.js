@@ -37,15 +37,8 @@ app.post('/image', function(req, res) {
 });
 
 app.get('/disco', function(req, res) {
-    disco(!disco);
+    toggle_disco(!disco);
 });
-
-function disco(state) {
-    disco = state;
-    data = { disco_state: state }
-    io.sockets.broadcast('disco', data);
-    res.send(JSON.stringify(data));
-}
 
 io.on('connection', function(socket) {
     for (key in cache_images) {
@@ -68,6 +61,13 @@ function sendImage(data) {
         };
         io.sockets.emit('live-stream', data);
     }
+}
+
+function toggle_disco(state) {
+    disco = state;
+    data = { disco_state: state }
+    io.sockets.broadcast('disco', data);
+    res.send(JSON.stringify(data));
 }
 
 setInterval(function() {
