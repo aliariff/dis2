@@ -2,6 +2,7 @@ import time
 import picamera
 import requests
 import base64
+import io
 
 def send_image(base64_string):
   url = "https://amedeo.informatik.rwth-aachen.de/image"
@@ -10,9 +11,9 @@ def send_image(base64_string):
   print r.text
 
 def capture_image(camera):
-  stream = io.BytesIO()
   while True:
     try:
+      stream = io.BytesIO()
       camera.capture(stream, 'jpeg')
       base64_bytes = base64.b64encode(stream.getvalue())
       base64_string = base64_bytes.decode('utf-8')
