@@ -9,16 +9,15 @@ def send_image(base64_string):
   r = requests.post(url, data = payload)
   print r.text
 
-def filenames():
+def capture_image(camera):
+  stream = io.BytesIO()
   while True:
     try:
-      time.sleep(1)
-      yield 'image.jpg'
-      with open('image.jpg', 'rb') as open_file:
-        byte_content = open_file.read()
-      base64_bytes = base64.b64encode(byte_content)
+      camera.capture(stream, 'jpeg')
+      base64_bytes = base64.b64encode(stream.getvalue())
       base64_string = base64_bytes.decode('utf-8')
       send_image(base64_string)
+      time.sleep(1)
     except Exception as e:
       pass
 
@@ -28,4 +27,4 @@ with picamera.PiCamera() as camera:
   # camera.start_preview()
 
   time.sleep(2) # Camera Initialize
-  camera.capture_sequence(filenames(), use_video_port=True)
+  capture_image(camera)

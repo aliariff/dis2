@@ -1,1 +1,1 @@
-pkill -9 -f cam.py
+sudo pkill -9 -f cam.py
