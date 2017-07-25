@@ -5,18 +5,19 @@ var filePath = "disco.conf";
 console.log("Running");
 
 socket.on('connect', function() {
-	console.log("connected");
+  console.log("connected");
 });
 
 socket.on('disco', function(data) {
-	disco = data.disco_state;
-	
-	if (disco) {
-		fs.closeSync(fs.openSync(filePath, 'w'));
-	} else {
-		fs.unlinkSync(filePath);
-	}
+  disco = data.disco_state;
+
+  if (disco) {
+    fs.closeSync(fs.openSync(filePath, 'w'));
+  } else {
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+  }
 });
 
 socket.on('disconnect', function(){});
-
