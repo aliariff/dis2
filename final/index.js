@@ -6,6 +6,7 @@ var path = require('path');
 var os = require('os');
 var bodyParser = require('body-parser');
 var disco = false;
+var ip = '';
 var cache_images = {};
 var config = {
     port: 500
@@ -31,14 +32,24 @@ app.get('/active', function(req, res) {
     res.send(JSON.stringify(data));
 });
 
+app.get('/ip', function(req, res) {
+    data = {
+        raspberrypi_ip: ip
+    }
+    res.send(JSON.stringify(data));
+});
+
 app.post('/image', function(req, res) {
+    ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     sendImage(req.body);
     res.send('Image Received');
 });
 
 app.get('/disco', function(req, res) {
     disco = !disco;
-    data = { disco_state: disco };
+    data = {
+        disco_state: disco
+    };
     io.sockets.emit('disco', data);
     res.send(JSON.stringify(data));
 });
@@ -71,7 +82,9 @@ setInterval(function() {
         timestamp = cache_images[key]['timestamp'];
         if (new Date().getTime() - timestamp > 60000) {
             delete cache_images[key];
-            io.sockets.emit('dead-stream', { cam_id: key });
+            io.sockets.emit('dead-stream', {
+                cam_id: key
+            });
         }
     }
 }, 1000);
